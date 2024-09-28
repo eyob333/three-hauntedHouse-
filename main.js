@@ -204,20 +204,58 @@ gui.add(moonLight, 'intensity').min(0).max(1).step(0.001)
 gui.add(moonLight.position, 'x').min(- 5).max(5).step(0.001)
 gui.add(moonLight.position, 'y').min(- 5).max(5).step(0.001)
 gui.add(moonLight.position, 'z').min(- 5).max(5).step(0.001)
+
+moonLight.shadow.mapSize.height = 256 * 2
+moonLight.shadow.mapSize.width = 256 * 2
+moonLight.shadow.camera.near = 1
+moonLight.shadow.camera.far = 10
+moonLight.shadow.camera.left = 7
+moonLight.shadow.camera.right = -7
+moonLight.shadow.camera.top = 5
+moonLight.shadow.camera.bottom = -5
+
+
 scene.add(moonLight)
 
 // Door color
 
 const doorLight = new THREE.PointLight('#ff7d46', 2, 7)
 doorLight.position.set(0, 2.2, 2.7)
+
+doorLight.shadow.mapSize.width = 256 * 2
+doorLight.shadow.mapSize.height = 256 * 2
+doorLight.shadow.camera.near = 0.1
+doorLight.shadow.camera.far = 2.5
+
 house.add(doorLight)
+
 
 
 // gost
 
 const gosht1 = new THREE.PointLight('#ff00ff', 2, 3)
 const gosht2 = new THREE.PointLight('#00ffff', 2, 3)
-const gosht3 = new THREE.PointLight('#ffff00')
+const gosht3 = new THREE.PointLight('#ffff00', 2, 3)
+
+
+gosht1.shadow.mapSize.width = 256 * 2
+gosht1.shadow.mapSize.height = 256 * 2
+gosht1.shadow.camera.near = 0.1
+gosht1.shadow.camera.far = 2.5
+
+gosht2.shadow.mapSize.width = 256 * 2
+gosht2.shadow.mapSize.height = 256 * 2
+gosht2.shadow.camera.near = 0.1
+gosht2.shadow.camera.far = 2.5
+
+gosht3.shadow.mapSize.width = 256 * 2
+gosht3.shadow.mapSize.height = 256 * 2
+gosht3.shadow.camera.near = 0.1
+gosht3.shadow.camera.far = 2.5
+
+
+
+
 
 scene.add(gosht1, gosht2, gosht3)
 
@@ -269,9 +307,10 @@ renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 renderer.setClearColor('#262837')
 renderer.shadowMap.enabled = true
+renderer.shadowMap.type =  THREE.PCFShadowMap
 
 moonLight.castShadow = true
-door.castShadow = true
+doorLight.castShadow = true
 gosht1.castShadow = true
 gosht2.castShadow = true
 gosht3.castShadow = true
@@ -279,7 +318,10 @@ walls.castShadow = true
 bush1.castShadow = true
 bush2.castShadow = true
 bush3.castShadow = true
+bush4.castShadow = true
 floor.receiveShadow = true
+
+
 
 
 /**
